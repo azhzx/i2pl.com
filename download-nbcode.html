@@ -3,236 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark light">
-<title>下载 nbcode · macOS 代码编辑器 · i2pl.com</title>
+<meta name="color-scheme" content="light">
+<title>下载 nbcode · i2pl.com</title>
 <meta name="description" content="下载 nbcode —— 一个插件可扩展、内置 Agent 的原生 macOS 代码编辑器。">
 <meta property="og:title" content="下载 nbcode">
 <meta property="og:description" content="插件可扩展、内置 Agent 的原生 macOS 代码编辑器。">
 <meta property="og:type" content="website">
 <style>
-  :root {
-    --bg: #0d1014;
-    --panel: #141920;
-    --panel-2: #1a2029;
-    --border: rgba(255,255,255,.09);
-    --text: #eef2f7;
-    --muted: #9aa7b4;
-    --accent: #5b9cff;
-    --accent-2: #8d7bff;
-    --good: #52d29a;
-    --radius: 18px;
-  }
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #f4f6fa;
-      --panel: #ffffff;
-      --panel-2: #f7f9fc;
-      --border: rgba(15,23,42,.10);
-      --text: #0f172a;
-      --muted: #5d6b7c;
-      --accent: #2f6fed;
-      --accent-2: #6d5ce7;
-      --good: #128a5b;
-    }
-  }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  html, body { max-width: 100%; overflow-x: hidden; }
   body {
     margin: 0;
-    background:
-      radial-gradient(900px 480px at 15% -8%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 65%),
-      radial-gradient(760px 420px at 92% 0%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 60%),
-      var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    line-height: 1.65;
-    min-height: 100vh;
+    background: #fff;
+    color: #111;
+    font: 15px/1.7 -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-  a { color: inherit; }
-  .wrap { width: min(980px, calc(100% - 40px)); margin: 0 auto; }
-  header { padding: 26px 0; }
-  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .2px; text-decoration: none; }
-  .brand-mark {
-    width: 30px; height: 30px; border-radius: 9px;
-    display: grid; place-items: center;
-    background: linear-gradient(140deg, var(--accent), var(--accent-2));
-    color: #fff; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 13px; font-weight: 700;
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 30%, transparent);
+  a { color: #111; text-underline-offset: 3px; }
+  a:hover { color: #000; }
+  .wrap { width: min(720px, calc(100% - 40px)); margin: 0 auto; }
+  header { border-bottom: 1px solid #e8e8e8; }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 18px 0; font-size: 13px;
   }
-  .nav a.quiet { color: var(--muted); text-decoration: none; font-size: 13.5px; white-space: nowrap; }
-  .nav a.quiet:hover { color: var(--text); }
-  main { padding: 26px 0 72px; }
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: var(--muted); font-size: 12.5px; letter-spacing: .08em;
-    text-transform: uppercase; font-weight: 600;
+  .nav .brand { font-weight: 600; text-decoration: none; letter-spacing: -.01em; }
+  .nav a { color: #666; }
+  .nav a:hover { color: #111; }
+  main { padding: 52px 0 72px; }
+  .kicker { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #888; margin: 0 0 10px; }
+  h1 { font-size: 44px; line-height: 1.1; letter-spacing: -.035em; font-weight: 650; margin: 0 0 12px; }
+  .lead { font-size: 17px; line-height: 1.65; color: #555; margin: 0 0 26px; max-width: 620px; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; color: #777; font-size: 13px; margin-bottom: 22px; }
+  .meta span:not(:last-child)::after { content: "·"; margin-left: 10px; color: #bbb; }
+  .download {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 46px; padding: 10px 22px;
+    background: #111; color: #fff; text-decoration: none;
+    border-radius: 6px; font-size: 15px; font-weight: 550;
   }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 4px color-mix(in srgb, var(--good) 16%, transparent); }
-  h1 { font-size: clamp(46px, 8vw, 84px); line-height: 1.02; letter-spacing: -.045em; margin: 14px 0 10px; }
-  .grad { background: linear-gradient(110deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .tagline { font-size: clamp(17px, 2.4vw, 21px); color: var(--muted); max-width: 680px; margin: 0 0 30px; }
-  .download-card {
-    display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px;
-    padding: 24px; border: 1px solid var(--border); border-radius: var(--radius);
-    background: color-mix(in srgb, var(--panel) 88%, transparent);
-    backdrop-filter: blur(18px);
-    box-shadow: 0 24px 80px rgba(0,0,0,.22);
-  }
-  .download-card > *, .download-main, .side, .step, .callout { min-width: 0; }
-  .download-main h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.02em; }
-  .download-main p { margin: 0; color: var(--muted); font-size: 14px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 20px; }
-  .chip {
-    font-size: 12px; color: var(--muted);
-    border: 1px solid var(--border); background: var(--panel-2);
-    padding: 5px 10px; border-radius: 999px; white-space: nowrap;
-  }
-  .button {
-    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    width: 100%; min-height: 54px; padding: 12px 22px;
-    border-radius: 13px; text-decoration: none; font-weight: 650; font-size: 16px;
-    color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 32%, transparent);
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .button:hover { transform: translateY(-1px); box-shadow: 0 18px 42px color-mix(in srgb, var(--accent) 40%, transparent); }
-  .button svg { width: 20px; height: 20px; }
-  .fine { margin-top: 12px; color: var(--muted); font-size: 12px; text-align: center; }
-  .side { border-left: 1px solid var(--border); padding-left: 22px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
-  .side-row { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); }
-  .side-row strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 1px; }
-  .side-ico { width: 18px; height: 18px; flex: none; margin-top: 2px; color: var(--accent); }
-  section { margin-top: 54px; }
-  h3 { font-size: 22px; letter-spacing: -.02em; margin: 0 0 16px; }
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .step { border: 1px solid var(--border); background: var(--panel); border-radius: 14px; padding: 18px; }
-  .step-num { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--accent); font-weight: 700; }
-  .step b { display: block; margin: 7px 0 5px; font-size: 14px; }
-  .step p { margin: 0; color: var(--muted); font-size: 13px; }
+  .download:hover { background: #000; color: #fff; }
+  .fine { margin-top: 10px; color: #888; font-size: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+  .rule { border: 0; border-top: 1px solid #e8e8e8; margin: 42px 0; }
+  h2 { font-size: 17px; font-weight: 600; letter-spacing: -.01em; margin: 0 0 12px; }
+  section + section { margin-top: 42px; }
+  ol { margin: 0; padding-left: 22px; color: #444; }
+  ol li { margin: 8px 0; }
   code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: .92em; background: var(--panel-2);
-    border: 1px solid var(--border); border-radius: 6px;
+    font-size: .9em; background: #f5f5f5; border-radius: 4px;
     padding: 1px 5px; overflow-wrap: anywhere; word-break: break-word;
   }
-  .callout {
-    margin-top: 16px; padding: 16px 18px; border-radius: 12px;
-    border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
-    background: color-mix(in srgb, var(--accent) 7%, var(--panel));
-    font-size: 13.5px; color: var(--muted);
+  .note {
+    margin-top: 16px; padding: 12px 14px;
+    border: 1px solid #e8e8e8; border-radius: 6px;
+    color: #555; font-size: 13.5px;
   }
-  .callout b { color: var(--text); }
-  .faq { display: grid; gap: 10px; }
-  details { border: 1px solid var(--border); background: var(--panel); border-radius: 12px; padding: 14px 16px; }
-  summary { cursor: pointer; font-weight: 600; font-size: 14px; }
-  details p { margin: 9px 0 0; color: var(--muted); font-size: 13.5px; }
-  footer { border-top: 1px solid var(--border); padding: 22px 0 34px; color: var(--muted); font-size: 12.5px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-  @media (max-width: 760px) {
-    .download-card { grid-template-columns: 1fr; }
-    .side { border-left: 0; border-top: 1px solid var(--border); padding-left: 0; padding-top: 18px; }
-    .steps { grid-template-columns: 1fr; }
+  .faq { border-top: 1px solid #eee; }
+  details { border-bottom: 1px solid #eee; padding: 12px 0; }
+  summary { cursor: pointer; font-weight: 550; font-size: 14px; }
+  details p { margin: 8px 0 2px; color: #666; font-size: 13.5px; }
+  footer {
+    border-top: 1px solid #e8e8e8; padding: 18px 0 32px;
+    color: #888; font-size: 12px;
+    display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  }
+  @media (max-width: 560px) {
+    main { padding-top: 38px; }
+    h1 { font-size: 36px; }
+    .lead { font-size: 16px; }
+    .download { width: 100%; }
   }
 </style>
 </head>
 <body>
 <header>
   <div class="wrap nav">
-    <a class="brand" href="/"><span class="brand-mark">&lt;/&gt;</span><span>i2pl.com</span></a>
-    <a class="quiet" href="/">← 返回首页</a>
+    <a class="brand" href="/">i2pl.com</a>
+    <a href="/">← 返回首页</a>
   </div>
 </header>
 
 <main class="wrap">
-  <span class="eyebrow"><span class="dot"></span> macOS · Developer Tools</span>
-  <h1><span class="grad">nbcode</span></h1>
-  <p class="tagline">一个插件可扩展、内置 Agent 的原生 macOS 代码编辑器。Swift + SwiftUI 构建，轻量、快速，打开即用。</p>
+  <p class="kicker">macOS · Developer Tools</p>
+  <h1>nbcode</h1>
+  <p class="lead">一个插件可扩展、内置 Agent 的原生 macOS 代码编辑器。Swift + SwiftUI 构建，轻量、快速，打开即用。</p>
 
-  <div class="download-card">
-    <div class="download-main">
-      <h2>下载 nbcode</h2>
-      <p>压缩包内含 <b>nbcode.app</b> 与完整的 <b>Plugins</b> 文件夹，解压后按下面三步安装。</p>
-      <div class="meta">
-        <span class="chip">版本 0.1.0</span>
-        <span class="chip">Apple Silicon</span>
-        <span class="chip">macOS 26+</span>
-        <span class="chip" id="size-chip">19.0 MB</span>
-      </div>
-      <a class="button" href="downloads/nbcode-macos.zip" download>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-        下载 nbcode（.zip）
-      </a>
-      <div class="fine" id="checksum" title="5228b762adf7dca0bc9250636395728416ba24c9158c7b570b20dd1369e2b61e">包含 nbcode.app + Plugins · 19.0 MB · SHA-256 5228b762…</div>
-    </div>
-    <div class="side">
-      <div class="side-row">
-        <svg class="side-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        <div><strong>原生性能</strong>AppKit / SwiftUI，不是 Electron 套壳</div>
-      </div>
-      <div class="side-row">
-        <svg class="side-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-        <div><strong>内置 Agent</strong>直接在工作区里读代码、改代码、跑命令</div>
-      </div>
-      <div class="side-row">
-        <svg class="side-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
-        <div><strong>插件系统</strong>语言、Git、终端、Agent 都由插件拼装</div>
-      </div>
-    </div>
+  <div class="meta">
+    <span>版本 0.1.0</span>
+    <span>Apple Silicon</span>
+    <span>macOS 26+</span>
+    <span>19.0 MB</span>
   </div>
 
+  <a class="download" href="downloads/nbcode-macos.zip" download>下载 nbcode（.zip）</a>
+  <p class="fine" title="5228b762adf7dca0bc9250636395728416ba24c9158c7b570b20dd1369e2b61e">包含 nbcode.app + Plugins · SHA-256 5228b762…</p>
+
+  <hr class="rule">
+
   <section>
-    <h3>安装</h3>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <b>解压 zip</b>
-        <p>得到 <code>nbcode.app</code>、<code>Plugins</code> 和 <code>install.command</code>。</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <b>运行 install.command</b>
-        <p>双击它会把 app 放进「应用程序」，并把 Plugins 复制到 nbcode 的插件目录。</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <b>打开 nbcode</b>
-        <p>第一次启动若被 macOS 拦截，右键 app 图标选择「打开」，或按下方命令放行。</p>
-      </div>
-    </div>
-    <div class="callout">
-      <b>手动安装：</b>把 <code>nbcode.app</code> 拖进 <code>/Applications</code>，然后把 <code>Plugins</code> 复制到
+    <h2>安装</h2>
+    <ol>
+      <li>解压 zip，得到 <code>nbcode.app</code>、<code>Plugins</code> 和 <code>install.command</code>。</li>
+      <li>双击 <code>install.command</code>。它会把 app 放进「应用程序」，并把 Plugins 复制到 nbcode 的插件目录。</li>
+      <li>打开 nbcode。首次启动若被 macOS 拦截，右键 app 图标选择「打开」，或执行下面的命令。</li>
+    </ol>
+    <div class="note">
+      手动安装：把 <code>nbcode.app</code> 拖进 <code>/Applications</code>，把 <code>Plugins</code> 复制到
       <code>~/Library/Application Support/nbcode/Plugins</code>。首次打开前可在终端执行
       <code>xattr -dr com.apple.quarantine /Applications/nbcode.app</code>。
     </div>
   </section>
 
   <section>
-    <h3>常见问题</h3>
+    <h2>常见问题</h2>
     <div class="faq">
       <details open>
         <summary>为什么第一次打开提示“无法验证开发者”？</summary>
-        <p>这是未经过 Apple 公证的开发者构建。右键点击 <code>nbcode.app</code> →「打开」→「仍要打开」，或在终端执行上面的 <code>xattr</code> 命令即可。只从本页下载，不要运行来源不明的副本。</p>
+        <p>这是未经过 Apple 公证的开发者构建。右键点击 <code>nbcode.app</code> →「打开」→「仍要打开」，或执行上面的 <code>xattr</code> 命令。只从本页下载。</p>
       </details>
       <details>
         <summary>支持 Intel Mac 吗？</summary>
         <p>当前构建是 Apple Silicon（arm64），需要 macOS 26 或更高版本。Intel 版本暂未提供。</p>
       </details>
       <details>
-        <summary>为什么下载包里没有源代码？</summary>
-        <p>这里只分发编译好的应用与插件资源；nbcode 的源代码不在此仓库公开。下载 zip 里只有 <code>nbcode.app</code>、<code>Plugins</code> 和安装脚本。</p>
+        <summary>下载包里包含源代码吗？</summary>
+        <p>不包含。这里只分发编译好的应用与插件资源：<code>nbcode.app</code>、<code>Plugins</code> 和安装脚本。</p>
       </details>
       <details>
         <summary>Plugins 必须安装吗？</summary>
-        <p>建议安装。没有插件时 nbcode 仍可打开文件，但语言高亮、Git 面板、终端、Agent 工具等能力会缺失。</p>
+        <p>建议安装。没有插件时仍可打开文件，但语言高亮、Git 面板、终端、Agent 工具等能力会缺失。</p>
       </details>
     </div>
   </section>
 </main>
 
 <footer class="wrap">
-  <span>© <span id="year">2026</span> i2pl.com · nbcode</span>
+  <span>© <span id="year">2026</span> i2pl.com</span>
   <span>仅提供编译产物 · 不包含源代码</span>
 </footer>
 <script>
