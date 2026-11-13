@@ -37,6 +37,7 @@
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+  html, body { max-width: 100%; overflow-x: hidden; }
   body {
     margin: 0;
     background:
@@ -61,7 +62,7 @@
     font-size: 13px; font-weight: 700;
     box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 30%, transparent);
   }
-  .nav a.quiet { color: var(--muted); text-decoration: none; font-size: 13.5px; }
+  .nav a.quiet { color: var(--muted); text-decoration: none; font-size: 13.5px; white-space: nowrap; }
   .nav a.quiet:hover { color: var(--text); }
   main { padding: 26px 0 72px; }
   .eyebrow {
@@ -80,6 +81,7 @@
     backdrop-filter: blur(18px);
     box-shadow: 0 24px 80px rgba(0,0,0,.22);
   }
+  .download-card > *, .download-main, .side, .step, .callout { min-width: 0; }
   .download-main h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.02em; }
   .download-main p { margin: 0; color: var(--muted); font-size: 14px; }
   .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 20px; }
@@ -114,7 +116,7 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: .92em; background: var(--panel-2);
     border: 1px solid var(--border); border-radius: 6px;
-    padding: 1px 5px; overflow-wrap: anywhere;
+    padding: 1px 5px; overflow-wrap: anywhere; word-break: break-word;
   }
   .callout {
     margin-top: 16px; padding: 16px 18px; border-radius: 12px;
